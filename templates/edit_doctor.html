@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style6.css') }}">
+    <title>Edit Doctor</title>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="#" class="logo"><img src="{{ url_for('static', filename='img/Eye Center Logo Template Design.png') }}" alt="Logo"></a>
+        <nav class="navbar">
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+        <div id="menubtn" class="fas fa-bars"></div>
+    </header>
+
+    <!-- Form Section -->
+    <div class="form-page">
+        <div class="form-container">
+            <h1>Edit Doctor</h1>
+            <form method="post">
+                <div class="form-group">
+                    <label for="name">Doctor Name:</label>
+                    <input type="text" id="name" name="name" value="{{ doctor.name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="{{ doctor.email }}" required>
+                </div>
+                <button type="submit" class="submit-btn">Save</button>
+                <a href="{{ url_for('admin_dashboard') }}" class="btn">Back to Admin Dashboard</a>
+            </form>
+        </div>
+    </div>
+   
+</body>
+</html>

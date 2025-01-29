@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style6.css') }}">
+    <title>Edit Report</title>
+</head>
+<body>
+
+           <!-- Header Section -->
+           <header>
+            <a href="#" class="logo"><img src="{{ url_for('static', filename='img/Eye Center Logo Template Design.png') }}" alt="Logo"></a>
+            <nav class="navbar">
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </nav>
+            <div id="menubtn" class="fas fa-bars"></div>
+        </header>
+
+    <div class="form-page">
+        <div class="form-container">
+            <h1>Edit Report</h1>
+            <form method="post">
+                <div class="form-group">
+                    <label for="name">Patient Name:</label>
+                    <input type="text" id="name" name="name" value="{{ report.name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="diagnosis">Diagnosis:</label>
+                    <input type="text" id="diagnosis" name="diagnosis" value="{{ report.diagnosis }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="doctor_id">Assign Doctor:</label>
+                    <select id="doctor_id" name="doctor_id" required>
+                        {% for doctor in doctors %}
+                            <option value="{{ doctor.doctor_id }}" {% if report.doctor_id == doctor.doctor_id %}selected{% endif %}>
+                                {{ doctor.name }} (ID: {{ doctor.doctor_id }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">Save</button>
+                <a href="{{ url_for('doctor_details', doctor_id=report.doctor_id) }}" class="btn">Back to Doctor Details</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
