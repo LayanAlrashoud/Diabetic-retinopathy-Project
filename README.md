@@ -1,1 +1,3 @@
-# Diabetic-retinopathy-Project
+# Diabetic Retinopathy Project
+
+Diabetic Retinopathy (DR) is a serious eye disease that can cause blindness if not detected early. Current diagnostic methods face limitations, making the process challenging and time-consuming. This project proposes a hybrid model that combines Convolutional Neural Networks (CNNs) and Vision Transformers (ViTs) to improve the accuracy and efficiency of DR detection. CNNs focus on extracting important features from retinal images, identifying critical patterns, while the ViTs capture a broader context and fine details, enhancing the overall diagnostic process. This approach aims to address the limitations of existing methods and support healthcare professionals in the early detection of DR, ultimately helping to reduce the risk of vision loss significantly.
