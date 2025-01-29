@@ -1,0 +1,128 @@
+.form-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9; 
+}
+
+
+.form-container {
+    background-color: #ffffff; 
+    border: 1px solid #ccc; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    padding: 30px 40px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333333;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #335c9f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+.submit-btn:hover {
+    background-color: #50adcb;
+    transform: translateY(-2px);
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: center; 
+    margin-top: 20px; 
+}
+
+
+.btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1.5rem;
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.3s ease;
+    width: 100%; 
+}
+
+.btn:hover {
+    background-color: var(--blue);
+    color: #fff;
+}
+
+
+.prediction-result {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.prediction-result .result-box h3 {
+    color: #335c9f;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.prediction-result .result-box p {
+    font-size: 16px;
+    color: #333;
+    margin: 10px 0;
+}
+
+
+
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px 30px;
+    }
+}
