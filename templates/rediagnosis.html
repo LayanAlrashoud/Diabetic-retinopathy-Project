@@ -8,7 +8,7 @@
     <title>Re-diagnosis</title>
 </head>
 <body>
-    <!-- Header Section -->
+
     <header>
         <a href="#" class="logo"><img src="{{ url_for('static', filename='img/Eye Center Logo Template Design.png') }}" alt="Logo"></a>
         <nav class="navbar">
@@ -16,7 +16,7 @@
         </nav>
     </header>
 
-    <!-- Centered Upload Section -->
+
     <div class="form-page">
         <div class="form-container">
             <h1>Re-Diagnosis</h1>
@@ -37,9 +37,9 @@
                 <a href="{{ url_for('list_patients') }}" class="btn">Back To Patients</a>
             </form>
 
-            <!-- Diagnosis Results Section -->
+
             <div id="prediction" class="prediction-result" style="display: none;">
-                <!-- Diagnosis result will appear here dynamically -->
+                
             </div>
         </div>
     </div>
@@ -50,8 +50,8 @@
 
             const formData = new FormData(event.target);
             const predictionDiv = document.getElementById('prediction');
-            predictionDiv.style.display = "none"; // Hide results until they are ready
-            predictionDiv.innerHTML = ""; // Clear previous results if any
+            predictionDiv.style.display = "none"; 
+            predictionDiv.innerHTML = ""; 
 
             try {
                 const response = await fetch('/rediagnosis', {
@@ -64,7 +64,7 @@
                 if (result.error) {
                     alert('Error: ' + result.error);
                 } else {
-                    // Show results dynamically
+               
                     predictionDiv.style.display = "block";
                     predictionDiv.innerHTML = `
                         <div class="result-box">
