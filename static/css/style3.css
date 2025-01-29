@@ -1,0 +1,112 @@
+body {
+    font-family: "Roboto", sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    position: fixed;
+    padding: 2rem 9%;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .1);
+    z-index: 1000;
+    height: 80px; 
+}
+
+header .logo img {
+    height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+header .navbar a {
+    font-size: 1.7rem;
+    color: var(--light);
+    margin-left: 2rem;
+    text-decoration: none;
+}
+
+.patients-section {
+    padding-top: 10rem; 
+    padding-left: 9%;
+    padding-right: 9%;
+}
+
+.page-title {
+    text-align: left;
+    font-size: 2.5rem;
+    color: var(--black);
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 2rem;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.patient-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.patient-table thead {
+    background-color: var(--black);
+    color: #fff; 
+}
+
+.patient-table th, .patient-table td {
+    text-align: left;
+    padding: 1rem;
+    font-size: 1.6rem;
+    border: 1px solid #ddd;
+}
+
+.patient-table th {
+    font-weight: bold;
+    color: #fff; 
+}
+
+.patient-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.patient-table td {
+    color: var(--light);
+}
+
+.edit-button {
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1.4rem;
+    transition: background-color 0.3s ease;
+}
+
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2rem;
+    }
+
+    .patient-table th, .patient-table td {
+        font-size: 1.4rem;
+    }
+}
