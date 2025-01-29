@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style8.css') }}">
+    <title>Re-diagnosis</title>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <a href="#" class="logo"><img src="{{ url_for('static', filename='img/Eye Center Logo Template Design.png') }}" alt="Logo"></a>
+        <nav class="navbar">
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+
+    <!-- Centered Upload Section -->
+    <div class="form-page">
+        <div class="form-container">
+            <h1>Re-Diagnosis</h1>
+            <form id="rediagnosisForm" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Patient Name:</label>
+                    <input type="text" id="name" name="name" value="{{ name }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="age">Patient Age:</label>
+                    <input type="number" id="age" name="age" value="{{ age }}" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="file">Upload New Image:</label>
+                    <input type="file" id="file" name="file" accept="image/*" required>
+                </div>
+                <button type="submit" class="submit-btn">Submit And Get New Diagnosis</button>
+                <a href="{{ url_for('list_patients') }}" class="btn">Back To Patients</a>
+            </form>
+
+            <!-- Diagnosis Results Section -->
+            <div id="prediction" class="prediction-result" style="display: none;">
+                <!-- Diagnosis result will appear here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('rediagnosisForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+            const predictionDiv = document.getElementById('prediction');
+            predictionDiv.style.display = "none"; // Hide results until they are ready
+            predictionDiv.innerHTML = ""; // Clear previous results if any
+
+            try {
+                const response = await fetch('/rediagnosis', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const result = await response.json();
+
+                if (result.error) {
+                    alert('Error: ' + result.error);
+                } else {
+                    // Show results dynamically
+                    predictionDiv.style.display = "block";
+                    predictionDiv.innerHTML = `
+                        <div class="result-box">
+                            <h3>New Diagnosis:</h3>
+                            <p><strong>${result.diagnosis}</strong></p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while uploading the image.');
+            }
+        });
+    </script>
+</body>
+</html>
