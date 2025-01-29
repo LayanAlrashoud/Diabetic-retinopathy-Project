@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style5.css') }}">
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <a href="#" class="logo"><img src="{{ url_for('static', filename='img/Eye Center Logo Template Design.png') }}" alt="Logo"></a>
         <nav class="navbar">
@@ -19,7 +18,6 @@
         </nav>
     </header>
 
-    <!-- Patients Section -->
     <section class="patients-section">
         <h1 class="page-title">My Patients</h1>
         <div class="table-container">
@@ -62,7 +60,6 @@
         </div>
     </section>
 
-    <!-- Appointment Section -->
     <section class="appointments-section">
         <h2>Appointments</h2>
         <div class="table-container">
@@ -104,7 +101,6 @@
     </section>
 
     <script>
-        // Confirmation for patient deletion
         function confirmDelete(patientName) {
             const confirmation = confirm(`Are you sure you want to delete the patient: ${patientName}?`);
             if (confirmation) {
