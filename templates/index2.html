@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Patient Data | Diabetic Retinopathy Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav-icon.svg') }}" type="image/x-icon">
+    <script>
+        async function uploadImage(event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const fileInput = document.getElementById('file');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert("Please select an image!");
+                return;
+            }
+
+            formData.append('name', name);
+            formData.append('age', age);
+            formData.append('file', file);
+
+            const progressBar = document.getElementById('progress-bar');
+
+            // Simulate progress bar animation
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                if (progress < 90) {
+                    progress += 10;
+                    progressBar.style.width = `${progress}%`;
+                    progressBar.innerText = `${progress}%`;
+                }
+            }, 300);
+
+            try {
+                const response = await fetch('/add_patient', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+                progressBar.innerText = '100%';
+
+                const result = await response.json();
+
+                if (result.error) {
+                    alert("Error: " + result.error);
+                } else {
+                    const predictionDiv = document.getElementById('prediction');
+                    predictionDiv.innerHTML = `
+                        <div class="result-box">
+                            <h3>Diagnosis Result:</h3>
+                            <p><strong>Name:</strong> ${result.name}</p>
+                            <p><strong>Age:</strong> ${result.age}</p>
+                            <p><strong>Diagnosis:</strong> ${result.diagnosis}</p>
+                        </div>
+                    `;
+
+                    // Clear the input fields after submission
+                    clearInputFields();
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred while uploading the image.");
+                clearInterval(progressInterval);
+                progressBar.style.width = '0%';
+                progressBar.innerText = '0%';
+            }
+        }
+
+        function previewImage(event) {
+            const fileInput = document.getElementById('file');
+            const previewDiv = document.getElementById('preview');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const originalFileName = file.name;
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewDiv.innerHTML = `
+                        <div class="preview-container">
+                            <img src="${e.target.result}" alt="Preview">
+                            <span class="file-name">${originalFileName}</span>
+                            <button class="remove-btn" onclick="removePreview()">X</button>
+                        </div>
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removePreview() {
+            const fileInput = document.getElementById('file');
+            const previewDiv = document.getElementById('preview');
+            fileInput.value = ''; // Clear the input
+            previewDiv.innerHTML = ''; // Clear the preview
+        }
+
+        function clearInputFields() {
+            document.getElementById('name').value = '';
+            document.getElementById('age').value = '';
+            document.getElementById('file').value = '';
+            document.getElementById('preview').innerHTML = ''; // Clear the image preview
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="#" class="logo"><img src="{{ url_for('static', filename='img/Eye Center Logo Template Design.png') }}" alt="Logo"></a>
+        <nav class="navbar">
+            <a href="{{ url_for('homepage') }}">Home</a>
+            <a href="/patients">Patients</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+        
+    </header>
+
+    <!-- Centered Upload Section -->
+    <section class="upload-section">
+        <div class="upload-box">
+            <h1>Upload Patient Data</h1>
+            <form onsubmit="uploadImage(event)">
+                <input type="text" id="name" name="name" placeholder="Enter patient's name" class="box" required>
+                <input type="number" id="age" name="age" min="1" max="120" placeholder="Enter patient's age" class="box" required>
+                <div class="file-upload">
+                    <label for="file" class="upload-label">Drag & Drop or Click to Browse</label>
+                    <input type="file" id="file" name="file" accept="image/*" onchange="previewImage(event)" required>
+                </div>
+                <div id="preview"></div>
+                <div class="progress-container">
+                    <div id="progress-bar" class="progress-bar">0%</div>
+                </div>
+                <button type="submit" class="btn">Submit and Get Prediction</button>
+            </form>
+            <div id="prediction" class="prediction-result"></div>
+        </div>
+    </section>
+
+</body>
+</html>

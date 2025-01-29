@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diabetic Retinopathy AI Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style4.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav-icon.svg') }}" type="image/x-icon">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <a href="#" class="logo">
+            <img src="{{ url_for('static', filename='img/Eye Center Logo Template Design.png') }}" alt="Logo">
+        </a>
+        <nav class="navbar">
+            <a href="{{ url_for('homepage') }}">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Appointments</a>
+    
+            <!-- Display Admin or Patients dynamically -->
+            {% if "user" in session and session['role'] == 'doctor' %}
+                <a href="{{ url_for('list_patients') }}">Patients</a>
+            {% else %}
+                <a href="{{ url_for('admin_dashboard') }}">Admin</a>
+            {% endif %}
+    
+            <!-- Show Login or Logout -->
+            {% if "user" in session %}
+                <a href="{{ url_for('logout') }}" >Logout</a>
+            {% else %}
+                <a href="{{ url_for('login_page') }}" >Login</a>
+            {% endif %}
+        </nav>
+        <div id="menubtn" class="fas fa-bars"></div>
+    </header>
+    
+    
+
+    <!-- Home Section -->
+    <section class="home">
+        <div class="content">
+            <h3>Empowering Eye Health with AI-Driven Precision</h3>
+            <p>Our advanced AI technology offers quick and reliable diabetic retinopathy detection from your eye images.</p>
+            <a href="{% if 'user' in session %}{{ url_for('add_patient_page') }}{% else %}{{ url_for('login_page') }}{% endif %}" class="btn">
+                Get Diagnosis
+            </a>
+            
+            
+        </div>
+        <div class="image">
+            <img src="{{ url_for('static', filename='img/circular_robot_doctor_image.png') }}" alt="Doctor AI">
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h1 class="heading">about <span>us</span></h1>
+        <div class="wrapper">
+            <div class="image">
+                <img src="{{ url_for('static', filename='img/img2.png') }}" alt="About Us">
+            </div>
+            <div class="content">
+                <h3>why you should choose us</h3>
+                <p>We are dedicated to protecting your vision by leveraging the power of artificial intelligence. Our platform offers a seamless and accessible solution for early detection of diabetic retinopathy and other eye health concerns.</p>
+                <a href="#services" class="btn">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <h1 class="heading">our <span>Solution</span></h1>
+        <div class="box-container">
+            <div class="box">
+                <i class="fas fa-ambulance"></i>
+                <h3>AI-Powered Retinal Analysis</h3>
+                <p>Utilizing the latest advancements in Vision Transformers (ViT), CNNs, our system diagnoses diabetic retinopathy across all five stages.</p>
+                <a href="#contact" class="btn">Learn More</a>
+            </div>
+            <div class="box">
+                <i class="fas fa-notes-medical"></i>
+                <h3>User-Friendly Interface</h3>
+                <p>Designed with simplicity in mind, DeepEye allows healthcare professionals to upload retinal images effortlessly and receive instant results</p>
+                <a href="#contact" class="btn">Learn More</a>
+            </div>
+            <div class="box">
+                <i class="fas fa-user-md"></i>
+                <h3>Real-Time Notifications</h3>
+                <p>Alerts healthcare professionals immediately about high-risk cases, ensuring prompt attention and care.</p>
+                <a href="#contact" class="btn">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+     <!-- Contact Section -->
+     <section class="contact" id="contact">
+        <h1 class="heading"><span>book an</span> appointment</h1>
+        <div class="wrapper">
+            <div class="image">
+                <img src="{{ url_for('static', filename='img/img3.png') }}" alt="Contact Us">
+            </div>
+            <form action="/send_email" method="POST" id="contactForm">
+                <input 
+                    type="text" 
+                    name="name" 
+                    placeholder="Your Name" 
+                    class="box" 
+                    {% if not is_doctor_logged_in %}disabled{% endif %} 
+                    required
+                >
+                <input 
+                    type="email" 
+                    name="email" 
+                    placeholder="Your Email" 
+                    class="box" 
+                    {% if not is_doctor_logged_in %}disabled{% endif %} 
+                    required
+                >
+                <input 
+                    type="number" 
+                    name="phone" 
+                    placeholder="Your Phone Number" 
+                    class="box" 
+                    {% if not is_doctor_logged_in %}disabled{% endif %} 
+                    required
+                >
+                <input 
+                    type="date" 
+                    name="date" 
+                    class="box" 
+                    {% if not is_doctor_logged_in %}disabled{% endif %} 
+                    id="datePicker" 
+                    required
+                >
+                <script>
+                    // ensure date start from today
+                    const datePicker = document.getElementById('datePicker');
+                    const today = new Date().toISOString().split('T')[0]; 
+                    datePicker.min = today;
+                </script>
+                
+                <input 
+                    type="submit" 
+                    value="Place Appointment" 
+                    class="btn" 
+                    {% if not is_doctor_logged_in %}disabled{% endif %}
+                >
+                <div id="successMessage" class="message" style="display: none;">The appointment has been booked successfully.</div>
+                {% if not is_doctor_logged_in %}
+                <p class="warning-message">You must be logged in as a doctor to place an appointment.</p>
+                {% endif %}
+            </form>
+            
+        </div>
+    </section>
+
+
+    <script>
+        function showPopup(message, isSuccess = true) {
+            console.log("showPopup called with message:", message); // Debug log
+
+            const popupText = document.getElementById("popupText");
+            const popupMessage = document.getElementById("popupMessage");
+            const popupOverlay = document.getElementById("popupOverlay");
+
+            popupText.textContent = message;
+            popupText.style.color = isSuccess ? "green" : "red";
+
+            popupMessage.style.display = "block";
+            popupOverlay.style.display = "block";
+        }
+
+        function closePopup() {
+            console.log("closePopup called"); // Debug log
+            document.getElementById("popupMessage").style.display = "none";
+            document.getElementById("popupOverlay").style.display = "none";
+        }
+        document.getElementById("contactForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        try {
+            const response = await fetch("/send_email", {
+                method: "POST",
+                body: formData,
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Clear the form inputs
+                this.reset();
+
+                // Display the success message
+                const successMessage = document.getElementById("successMessage");
+                successMessage.style.display = "block";
+
+                // Hide the success message after 3 seconds
+                setTimeout(() => {
+                    successMessage.style.display = "none";
+                }, 3000);
+            } else {
+                alert(`Error: ${result.message}`);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An unexpected error occurred. Please try again later.");
+        }
+    });
+
+
+
+    </script>
+    
+    
+   <!-- Footer Section -->
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>Contact us!</h3>
+                <a href="mailto:DeepEyeproject@gmail.com">Email: DeepEyeproject@gmail.com</a>
+                <a href="tel:+966051234567">Phone Number: +966 051234567</a>
+            </div>
+
+        </div>
+    </section>
+
+    <script>
+        const menu = document.querySelector('#menubtn');
+        const navbar = document.querySelector('.navbar');
+
+        menu.onclick = () => {
+            menu.classList.toggle('fa-times');
+            navbar.classList.toggle('active');
+        };
+
+        window.onscroll = () => {
+            menu.classList.remove('fa-times');
+            navbar.classList.remove('active');
+        };
+    </script>
+</body>
+</html>
