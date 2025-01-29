@@ -19,7 +19,7 @@
     --border: .2rem solid var(--blue);
 }
 body.login-page {
-    background: linear-gradient(to bottom right, #1e3c72, #2a5298); /* Smooth gradient background */
+    background: linear-gradient(to bottom right, #1e3c72, #2a5298); 
     min-height: 100vh;
     margin: 0;
     display: flex;
