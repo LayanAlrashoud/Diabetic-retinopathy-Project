@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style6.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/fav-icon.svg') }}" type="image/x-icon">
+    <title>Add Doctor</title>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <a href="#" class="logo"><img src="{{ url_for('static', filename='img/Eye Center Logo Template Design.png') }}" alt="Logo"></a>
+        <nav class="navbar">
+            <a href="{{ url_for('logout') }}">Logout</a> 
+      
+        </nav>
+        <div id="menubtn" class="fas fa-bars"></div>
+    </header>
+
+
+    <div class="form-page">
+        <div class="form-container">
+            <h1>Add Doctor</h1>
+            {% if error %}
+                <p style="color: red; text-align: center;">{{ error }}</p>
+            {% endif %}
+            <form method="post">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Enter Doctor Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Enter Doctor Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Add Doctor</button>
+                <a href="{{ url_for('admin_dashboard') }}" class="btn">Back to Admin Dashboard</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

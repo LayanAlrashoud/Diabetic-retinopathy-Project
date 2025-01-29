@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style4.css') }}">
+</head>
+<body>
+     <!-- Header Section -->
+     <header>
+        <a href="#" class="logo"><img src="{{ url_for('static', filename='img/Eye Center Logo Template Design.png') }}" alt="Logo"></a>
+        <nav class="navbar">
+            <a href="{{ url_for('homepage') }}">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+            <a href="{{ url_for('admin_dashboard') }}">Admin</a> 
+            {% if "user" in session %}
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="/login">Login</a>
+            {% endif %}
+        </nav>
+        <div id="menubtn" class="fas fa-bars"></div>
+    </header>
+
+    <div class="login-page">
+        <div class="form-container">
+            <h2>Login</h2>
+            {% if error %}
+                <p style="color: red; text-align: center;">{{ error }}</p>
+            {% endif %}
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
